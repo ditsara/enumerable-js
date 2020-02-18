@@ -38,10 +38,6 @@
 //   reduce: 'inject',
 // };
 
-export function incr(a: number): number {
-  return a + 1;
-}
-
 export function eachWithObject<T, U>(
   e: Enumerable<T>,
   obj: U,
@@ -118,7 +114,7 @@ export function none<T>(e: Enumerable<T>, fn: (member: T) => boolean): boolean {
   return !e.some(fn);
 }
 
-export function groupBy<T>(e: Enumerable<T>, fn: (member: T) => string) {
+export function groupBy<T>(e: Enumerable<T>, fn: (member: T) => string): {} {
   return eachWithObject(e, {}, (r, member) => {
     const key = fn(member)
     if (!r[key]) r[key] = [];
@@ -135,4 +131,13 @@ function emptyClone<T>(e: Enumerable<T>): Enumerable<T> {
 
 interface Enumerable<T> extends Array<T> {
   each: (member: T) => any;
+  groupBy: (member: T) => any;
+}
+
+export function makeEnumerable<T>(a: T[]): Enumerable<T> {
+  a['each'] = (fn: (member: T) => any) => {
+    a.forEach(fn)
+  }
+  a['groupBy'] = groupBy.bind(a, a);
+  return a as Enumerable<T>;
 }
