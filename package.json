@@ -1,0 +1,33 @@
+{
+  "name": "enumerable-js",
+  "version": "1.0.0",
+  "description": "",
+  "main": "build/index.js",
+  "module": "build/index.es.js",
+  "scripts": {
+    "build": "rollup -c",
+    "test": "jest --coverage",
+    "format": "prettier --write src/**/*"
+  },
+  "files": [
+    "build"
+  ],
+  "author": "Dan Itsara <dan.itsara@gmail.com>",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/jest": "^25.1.2",
+    "jest": "^25.1.0",
+    "prettier": "1.19.1",
+    "rollup": "^1.31.1",
+    "rollup-plugin-commonjs": "^10.1.0",
+    "rollup-plugin-node-resolve": "^5.2.0",
+    "rollup-plugin-peer-deps-external": "^2.2.2",
+    "rollup-plugin-typescript2": "^0.26.0",
+    "ts-jest": "^25.2.0",
+    "typescript": "^3.7.5"
+  },
+  "jest": {
+    "preset": "ts-jest",
+    "testEnvironment": "node"
+  }
+}
