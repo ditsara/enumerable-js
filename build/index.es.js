@@ -39,6 +39,38 @@
 function incr(a) {
     return a + 1;
 }
+function eachWithObject(e, obj, fn) {
+    var boundFn = function (mbr) { return fn(obj, mbr); };
+    // FIXME:
+    //
+    // error TS2345: Argument of type '(mbr: T) => U' is not assignable to
+    // parameter of type 'T'.  '(mbr: T) => U' is assignable to the constraint of
+    // type 'T', but 'T' could be instantiated with a different subtype of
+    // constraint '{}'.
+    //
+    // @ts-ignore
+    e.each(boundFn);
+    return obj;
+}
+function map(e, fn) {
+    return eachWithObject(e, [], function (r, member) {
+        r.push(fn(member));
+        return r;
+    });
+}
+function select(e, fn) {
+    var n = Object.assign({}, e);
+    n.length = 0;
+    return eachWithObject(e, n, function (r, member) {
+        if (fn(member))
+            r.push(member);
+        return r;
+    });
+}
+function reject(e, fn) {
+    var reverseFn = function (member) { return !fn(member); };
+    return select(e, reverseFn);
+}
 
-export { incr };
+export { eachWithObject, incr, map, reject, select };
 //# sourceMappingURL=index.es.js.map
